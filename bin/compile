@@ -23,6 +23,19 @@ CACHE_DIR=$2
 ENV_DIR=$3
 BP_DIR=`cd $(dirname $0); cd ..; pwd`
 
+mkdir -p ~/.aws
+
+cat >> ~/.aws/credentials << EOF
+[default]
+aws_access_key_id=$(cat $ENV_DIR/AWS_ACCESS_KEY_ID)
+aws_secret_access_key=$(cat $ENV_DIR/AWS_SECRET_ACCESS_KEY)
+EOF
+
+cat >> ~/.aws/config << EOF 
+[default]
+region=$(cat $ENV_DIR/AWS_DEFAULT_REGION)
+EOF
+
 # Switch to new Node auto build behavior ahead of release
 export NEW_BUILD_SCRIPT_BEHAVIOR=true
 
